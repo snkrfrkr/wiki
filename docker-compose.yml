@@ -1,10 +1,10 @@
 version: '3'
 services:
   mediawiki:
-    image: mediawiki
+    image: mediawiki:latest
     restart: always
     ports:
-      - 8080:80
+      - 9191:80
     links:
       - database
     volumes:
@@ -12,9 +12,9 @@ services:
       # After initial setup, download LocalSettings.php to the same directory as
       # this yaml and uncomment the following line and use compose to restart
       # the mediawiki service
-      # - ./LocalSettings.php:/var/www/html/LocalSettings.php
+      - ./LocalSettings.php:/var/www/html/LocalSettings.php
   database:
-    image: mariadb
+    image: mariadb:latest
     restart: always
     environment:
       MYSQL_DATABASE: strgc_wiki
@@ -23,7 +23,7 @@ services:
       MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
 
   redis:
-    image: redis
-    container_name: cache
-    expose:
-        - 6379
+    image: redis:latest
+    restart: always
+    #expose:
+    #    - 6379
